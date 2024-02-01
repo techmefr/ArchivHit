@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -6,100 +6,74 @@ import "react-toastify/dist/ReactToastify.css";
 function EditGame() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
-  const [formData, setFormData] = useState({
+  const [gameData, setGameData] = useState({
     name: "",
-    type: "",
+    type: false,
     play_time: "",
     age_min: "",
     age_max: "",
     player_min: "",
     player_max: "",
+    user_id: 1,
     editor_id: 1,
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${backendUrl}/api/game/${id}`);
-        const result = await response.json();
-        setFormData({
-          name: result.name,
-          type: result.type,
-          play_time: result.play_time,
-          age_min: result.age_min,
-          age_max: result.age_max,
-          player_min: result.player_min,
-          player_max: result.player_max,
-          editor_id: result.editor_id,
-        });
-      } catch (error) {
-        console.error(
-          "Erreur lors de la récupération des données du Street Art :",
-          error
-        );
-      }
-    };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setGameData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
-    fetchData();
-  }, [id]);
+  const handleToggleSwitch = () => {
+    setGameData((prevData) => ({
+      ...prevData,
+      type: !prevData.type,
+    }));
+  };
 
-  const handleUpdateGame = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${backendUrl}/api/game/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          type: formData.type,
-          play_time: formData.play_time,
-          age_min: formData.age_min,
-          age_max: formData.age_max,
-          player_min: formData.player_min,
-          player_max: formData.player_max,
-          editor_id: formData.editor_id,
-        }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/game/edit/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(gameData),
+        }
+      );
 
       if (response.ok) {
         toast.success("Jeu mis à jour avec succès");
-        navigate(`/game/${id}`);
+        navigate("/game");
       } else {
-        console.error(
-          "Erreur lors de la mise à jour du jeu :",
-          response.statusText
-        );
+        const errorData = await response.json();
         toast.error(
-          `Erreur lors de la mise à jour du jeu : ${response.statusText}`
+          `Erreur lors de la mise à jour du jeu : ${errorData.message}`
         );
       }
     } catch (error) {
-      console.error("Erreur lors de la mise à jour du jeu :", error);
-      toast.error(`Erreur lors de la mise à jour du jeu : ${error.message}`);
+      toast.error(
+        `Erreur inattendue lors de la mise à jour du jeu : ${error.message}`
+      );
     }
   };
 
-  const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   return (
-    <div>
-      <form onSubmit={handleUpdateGame}>
+    <div className="container-form-post">
+      <form onSubmit={handleSubmit}>
         <label htmlFor="name">
           Nom :
           <input
             type="text"
             id="name"
             name="name"
-            value={formData.name}
+            value={gameData.name}
             onChange={handleInputChange}
           />
         </label>
@@ -111,7 +85,8 @@ function EditGame() {
               type="checkbox"
               id="type"
               name="type"
-              checked={formData.type}
+              checked={gameData.type}
+              onChange={handleToggleSwitch}
             />
             <span className="slider round" />
           </div>
@@ -122,7 +97,7 @@ function EditGame() {
             type="text"
             id="play_time"
             name="play_time"
-            value={formData.play_time}
+            value={gameData.play_time}
             onChange={handleInputChange}
           />
         </label>
@@ -133,7 +108,7 @@ function EditGame() {
             type="text"
             id="age_min"
             name="age_min"
-            value={formData.age_min}
+            value={gameData.age_min}
             onChange={handleInputChange}
           />
         </label>
@@ -144,7 +119,7 @@ function EditGame() {
             type="text"
             id="age_max"
             name="age_max"
-            value={formData.age_max}
+            value={gameData.age_max}
             onChange={handleInputChange}
           />
         </label>
@@ -155,7 +130,7 @@ function EditGame() {
             type="text"
             id="player_min"
             name="player_min"
-            value={formData.player_min}
+            value={gameData.player_min}
             onChange={handleInputChange}
           />
         </label>
@@ -165,12 +140,11 @@ function EditGame() {
             type="text"
             id="player_max"
             name="player_max"
-            value={formData.player_max}
+            value={gameData.player_max}
             onChange={handleInputChange}
           />
         </label>
-
-        <button type="submit">Mettre à jour</button>
+        <button type="submit">Ajouter</button>
       </form>
     </div>
   );

@@ -53,7 +53,8 @@ function GameItem({
       <button type="button" onClick={handleDelete}>
         Supprimer
       </button>{" "}
-      <Link to="/edit">
+      <Link to={`/game/edit/${id}`}>
+        {" "}
         <button type="button">Modifier</button>
       </Link>{" "}
     </div>
