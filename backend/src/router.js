@@ -31,7 +31,7 @@ router.post("/user", userControllers.add);
 router.post("/editor", editorControllers.add);
 
 // Route to edit by ID
-router.put("/game/:id", gameControllers.update);
+router.put("/game/edit/:id", gameControllers.update);
 router.put("/user/:id", userControllers.update);
 router.put("/editor/:id", editorControllers.update);
 
