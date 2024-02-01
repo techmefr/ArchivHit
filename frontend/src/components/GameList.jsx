@@ -6,7 +6,7 @@ function GameList() {
   const [gameData, setGameData] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3310/api/game")
+    fetch(`${import.meta.env.VITE_BACKEND_URL}+api/game`)
       .then((response) => response.json())
       .then((data) => setGameData(data))
       .catch((error) =>

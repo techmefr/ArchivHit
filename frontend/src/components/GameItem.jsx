@@ -25,7 +25,6 @@ function GameItem({
       <p>
         Nombre de joueurs: {playerMin} - {playerMax}
       </p>
-      {/* Ajoutez d'autres éléments pour afficher les informations supplémentaires */}
     </div>
   );
 }
@@ -39,7 +38,6 @@ GameItem.propTypes = {
   ageMax: PropTypes.number.isRequired,
   playerMin: PropTypes.number.isRequired,
   playerMax: PropTypes.number.isRequired,
-  // Ajoutez d'autres types pour les propriétés supplémentaires
 };
 
 export default GameItem;

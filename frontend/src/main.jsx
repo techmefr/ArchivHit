@@ -8,6 +8,7 @@ import GameList from "./components/GameList";
 import PostGameForm from "./components/PostGameForm";
 import Access from "./pages/Access";
 import Register from "./components/Register";
+import GameById from "./components/GameById";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
   {
     path: "/game",
     element: <GameList />,
+  },
+  {
+    path: "/game/:id",
+    element: <GameById />,
   },
   {
     path: "/post",

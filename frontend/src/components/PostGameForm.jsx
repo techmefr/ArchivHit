@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import EditorSelect from "./EditorSelect";
 import "./postGameForm.css";
 
 function PostGameForm() {
+  const navigate = useNavigate();
   const [gameData, setGameData] = useState({
     name: "",
     type: false,
@@ -37,9 +39,30 @@ function PostGameForm() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO :   Mettre la fonction pour envoyer les données
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/game`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(gameData),
+        }
+      );
+
+      if (response.ok) {
+        navigate("/game");
+      } else {
+        const errorData = await response.json();
+        console.error(`Error adding game: ${errorData.message}`);
+      }
+    } catch (error) {
+      console.error("Unexpected error adding game:", error);
+    }
   };
 
   return (
@@ -66,6 +89,7 @@ function PostGameForm() {
               checked={gameData.type}
               onChange={handleToggleSwitch}
             />
+            <span className="slider round" />
           </div>
         </label>
         <label htmlFor="play_time">
@@ -102,7 +126,7 @@ function PostGameForm() {
         </label>
 
         <label htmlFor="player_min">
-          Nom :
+          Nombre de joueur minimum :
           <input
             type="text"
             id="player_min"
