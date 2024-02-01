@@ -6,6 +6,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 import GameList from "./components/GameList";
 import PostGameForm from "./components/PostGameForm";
+import Access from "./pages/Access";
+import Register from "./components/Register";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +21,14 @@ const router = createBrowserRouter([
   {
     path: "/post",
     element: <PostGameForm />,
+  },
+  {
+    path: "/access",
+    element: <Access />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
   },
 ]);
 
