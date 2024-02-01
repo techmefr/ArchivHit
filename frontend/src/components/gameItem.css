@@ -1,0 +1,7 @@
+.game-item {
+  background-color: grey;
+  padding: 0.5rem;
+  width: fit-content;
+  border-radius: 25px;
+  margin: 1rem;
+}
