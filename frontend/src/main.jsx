@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import App from "./App";
 import GameList from "./components/GameList";
+import PostGameForm from "./components/PostGameForm";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
   {
     path: "/game",
     element: <GameList />,
+  },
+  {
+    path: "/post",
+    element: <PostGameForm />,
   },
 ]);
 
