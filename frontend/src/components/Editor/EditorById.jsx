@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 
 function EditorById() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [editor, setEditor] = useState({});
 
@@ -35,7 +36,7 @@ function EditorById() {
       );
 
       if (response.ok) {
-        // Rediriger ou faire autre chose après la suppression réussie
+        navigate("/editor");
       } else {
         console.error("Error deleting editor:", response.statusText);
       }
@@ -45,7 +46,8 @@ function EditorById() {
   };
 
   return (
-    <div>
+    <div className="game-item">
+      {" "}
       <h2>Détails de l'Éditeur</h2>
       <p>Nom: {editor.name}</p>
       <Link to={`/editor/${id}/modify`}>

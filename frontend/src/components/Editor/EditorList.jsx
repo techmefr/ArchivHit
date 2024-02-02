@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 function EditorList() {
   const [editors, setEditors] = useState([]);
@@ -24,11 +25,13 @@ function EditorList() {
   }, []);
 
   return (
-    <div className="editor-container">
+    <div className="game-item">
       <h2>Liste des Éditeurs</h2>
       <ul>
         {editors.map((editor) => (
-          <li key={editor.id}>{editor.name}</li>
+          <li key={editor.id}>
+            <Link to={`/editor/${editor.id}`}>{editor.name}</Link>
+          </li>
         ))}
       </ul>
     </div>

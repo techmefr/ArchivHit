@@ -6,7 +6,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  background-color: #fbfcfa;
+  background-color: #fefee2;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -14,7 +14,53 @@ body {
   font-size: calc(10px + 2vmin);
   color: black;
 }
+button {
+  border: none;
+  color: #fff;
+  background-image: linear-gradient(30deg, #0400ff, #4ce3f7);
+  border-radius: 20px;
+  background-size: 100% auto;
+  font-family: inherit;
+  font-size: 17px;
+  padding: 0.6em 1.5em;
+  margin: 1rem;
+}
 
+button:hover {
+  background-position: right center;
+  background-size: 200% auto;
+  -webkit-animation: pulse 2s infinite;
+  animation: pulse512 1.5s infinite;
+}
+
+@keyframes pulse512 {
+  0% {
+    box-shadow: 0 0 0 0 #05bada66;
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgb(218 103 68 / 0%);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgb(218 103 68 / 0%);
+  }
+}
 .App-link {
-  color: #61dafb;
+  color: #0400ff;
+}
+.input-wrapper input {
+  background-color: white;
+  border: none;
+  padding: 1rem;
+  font-size: 1rem;
+  width: 13em;
+  border-radius: 1rem;
+  color: lightcoral;
+  box-shadow: 0 0.4rem #dfd9d9;
+  cursor: pointer;
+}
+
+.input-wrapper input:focus {
+  outline-color: lightcoral;
 }

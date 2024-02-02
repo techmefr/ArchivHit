@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 function ModifyEditor() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [name, setName] = useState("");
 
@@ -39,7 +40,7 @@ function ModifyEditor() {
       );
 
       if (response.ok) {
-        // Rediriger ou faire autre chose après la mise à jour réussie
+        navigate("/editor");
       } else {
         console.error("Error updating editor:", response.statusText);
       }
@@ -49,11 +50,13 @@ function ModifyEditor() {
   };
 
   return (
-    <div>
+    <div className="game-item">
       <h2>Modifier l'Éditeur</h2>
       <label>
         Nouveau Nom:
+        <br />
         <input
+          className="input-wrapper"
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}

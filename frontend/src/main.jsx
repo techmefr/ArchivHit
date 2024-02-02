@@ -25,11 +25,11 @@ const router = createBrowserRouter([
     element: <EditorList />,
   },
   {
-    path: "/editor:id",
+    path: "/editor/:id",
     element: <EditorById />,
   },
   {
-    path: "/editor/edit",
+    path: "/editor/:id/modify",
     element: <ModifyEditor />,
   },
   {
