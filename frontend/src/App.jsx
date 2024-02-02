@@ -1,14 +1,20 @@
 import "./App.css";
 import { Outlet } from "react-router-dom";
 import Navbar from "./components/NavBar";
+import Logo from "./components/Logo";
 
 function App() {
   return (
-    <div className="App">
-      <p>Hello User !</p>
-      <Navbar />
-      <Outlet />
-    </div>
+    <>
+      <header>
+        <Logo />
+      </header>
+      <div className="App">
+        <p>Hello User !</p>
+        <Navbar />
+        <Outlet />
+      </div>
+    </>
   );
 }
 
