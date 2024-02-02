@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import "./gameItem.css";
-import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useNavigate, Link } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
 
 function GameItem({
   id,
@@ -11,7 +13,30 @@ function GameItem({
   ageMax,
   playerMin,
   playerMax,
+  onDelete,
 }) {
+  const navigate = useNavigate();
+
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/game/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (response.ok) {
+        onDelete(id);
+        toast.success("Jeu supprimé avec succès!");
+        navigate("/game");
+      } else {
+        console.error(`Erreur lors de la suppression du jeu avec l'ID ${id}`);
+      }
+    } catch (error) {
+      console.error("Erreur inattendue lors de la suppression du jeu :", error);
+    }
+  };
   return (
     <div className="game-item">
       <Link to={`/game/${id}`}>
@@ -25,7 +50,13 @@ function GameItem({
       <p>
         Nombre de joueurs: {playerMin} - {playerMax}
       </p>
-      {/* Ajoutez d'autres éléments pour afficher les informations supplémentaires */}
+      <button type="button" onClick={handleDelete}>
+        Supprimer
+      </button>{" "}
+      <Link to={`/game/edit/${id}`}>
+        {" "}
+        <button type="button">Modifier</button>
+      </Link>{" "}
     </div>
   );
 }
@@ -39,7 +70,7 @@ GameItem.propTypes = {
   ageMax: PropTypes.number.isRequired,
   playerMin: PropTypes.number.isRequired,
   playerMax: PropTypes.number.isRequired,
-  // Ajoutez d'autres types pour les propriétés supplémentaires
+  onDelete: PropTypes.func.isRequired,
 };
 
 export default GameItem;

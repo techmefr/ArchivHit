@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import EditorSelect from "./EditorSelect";
-import "./postGameForm.css";
+import { useParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-function PostGameForm() {
+function EditGame() {
+  const { id } = useParams();
   const navigate = useNavigate();
   const [gameData, setGameData] = useState({
     name: "",
@@ -14,7 +15,7 @@ function PostGameForm() {
     player_min: "",
     player_max: "",
     user_id: 1,
-    editor_id: "",
+    editor_id: 1,
   });
 
   const handleInputChange = (e) => {
@@ -32,21 +33,14 @@ function PostGameForm() {
     }));
   };
 
-  const handleEditorSelect = (selectedEditorId) => {
-    setGameData((prevData) => ({
-      ...prevData,
-      editor_id: selectedEditorId,
-    }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/game`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/game/edit/${id}`,
         {
-          method: "POST",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
@@ -55,13 +49,18 @@ function PostGameForm() {
       );
 
       if (response.ok) {
+        toast.success("Jeu mis à jour avec succès");
         navigate("/game");
       } else {
         const errorData = await response.json();
-        console.error(`Error adding game: ${errorData.message}`);
+        toast.error(
+          `Erreur lors de la mise à jour du jeu : ${errorData.message}`
+        );
       }
     } catch (error) {
-      console.error("Unexpected error adding game:", error);
+      toast.error(
+        `Erreur inattendue lors de la mise à jour du jeu : ${error.message}`
+      );
     }
   };
 
@@ -145,15 +144,10 @@ function PostGameForm() {
             onChange={handleInputChange}
           />
         </label>
-
-        <label htmlFor="editor">
-          Éditeur :
-          <EditorSelect onSelect={handleEditorSelect} />
-        </label>
         <button type="submit">Ajouter</button>
       </form>
     </div>
   );
 }
 
-export default PostGameForm;
+export default EditGame;
