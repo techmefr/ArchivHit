@@ -65,7 +65,7 @@ function EditGame() {
   };
 
   return (
-    <div className="container-form-post">
+    <div className="game-item">
       <form onSubmit={handleSubmit}>
         <label htmlFor="name">
           Nom :
