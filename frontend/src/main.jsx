@@ -10,6 +10,10 @@ import Access from "./pages/Access";
 import Register from "./components/Register";
 import GameById from "./components/GameById";
 import EditGame from "./components/EditGame";
+import EditorList from "./components/Editor/EditorList";
+import EditorById from "./components/Editor/EditorById";
+import ModifyEditor from "./components/Editor/ModifyEditor";
+import PostEditor from "./components/Editor/PostEditor";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +27,20 @@ const router = createBrowserRouter([
   {
     path: "/game/:id",
     element: <GameById />,
+    path: "/editor",
+    element: <EditorList />,
+  },
+  {
+    path: "/editor/:id",
+    element: <EditorById />,
+  },
+  {
+    path: "/editor/:id/modify",
+    element: <ModifyEditor />,
+  },
+  {
+    path: "/editor/post",
+    element: <PostEditor />,
   },
   {
     path: "/post",
